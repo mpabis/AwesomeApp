@@ -1,0 +1,33 @@
+﻿@page "{ProjectId}"
+@model AwesomeApp.Web.Pages.ToDoRazorPage.IndexModel
+
+@if (!String.IsNullOrEmpty(Model.Message))
+{
+    <h2>@Model.Message</h2>
+}
+else
+{
+
+<h2>ShoppingList (Razor Page)</h2>
+
+<h3>Name: @Model.ShoppingList.Name</h3>
+
+<b>Items:</b>
+
+<ul>
+    @foreach (var item in Model.ShoppingList.Items)
+    {
+        <li>
+            @item.Title @if (item.IsDone)
+            {
+                <span>DONE!</span>
+            }
+            else
+            {
+                <span>NOT DONE</span>
+            }
+            <br />@item.Description
+        </li>
+    }
+</ul>
+}
