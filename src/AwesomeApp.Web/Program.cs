@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac.Extensions.DependencyInjection;
 using AwesomeApp.Infrastructure.Data;
+using ElectronNET.API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,7 +22,6 @@ namespace AwesomeApp.Web
                 try
                 {
                     var context = services.GetRequiredService<AppDbContext>();
-//                    context.Database.Migrate();
                     context.Database.EnsureCreated();
                     SeedData.Initialize(services);
                 }
@@ -36,19 +36,19 @@ namespace AwesomeApp.Web
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
-        .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-            webBuilder
-                .UseStartup<Startup>()
-                .ConfigureLogging(logging =>
-            {
-                logging.ClearProviders();
-                logging.AddConsole();
-                // logging.AddAzureWebAppDiagnostics(); add this if deploying to Azure
-            });
-        });
+            Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder
+                        .UseElectron(args)
+                        .UseStartup<Startup>()
+                        .ConfigureLogging(logging =>
+                    {
+                        logging.ClearProviders();
+                        logging.AddConsole();
+                    });
+                });
 
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Ardalis.ListStartupServices;
 using Autofac;
 using AwesomeApp.Core;
 using AwesomeApp.Infrastructure;
+using ElectronNET.API;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -90,6 +92,9 @@ namespace AwesomeApp.Web
 				endpoints.MapDefaultControllerRoute();
 				endpoints.MapRazorPages();
 			});
+
+            // Open the Electron-Window here
+            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
 		}
 	}
 }
