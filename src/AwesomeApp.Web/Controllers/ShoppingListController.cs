@@ -4,7 +4,6 @@ using AwesomeApp.Core;
 using AwesomeApp.Core.ProjectAggregate;
 using AwesomeApp.Core.ProjectAggregate.Specifications;
 using AwesomeApp.SharedKernel.Interfaces;
-using AwesomeApp.Web.ApiModels;
 using AwesomeApp.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +12,11 @@ namespace AwesomeApp.Web.Controllers
     [Route("[controller]")]
     public class ShoppingListController : Controller
     {
-        private readonly IRepository<ShoppingList> _projectRepository;
+        private readonly IRepository<ShoppingList> _shoppingListRepository;
 
-        public ShoppingListController(IRepository<ShoppingList> projectRepository)
+        public ShoppingListController(IRepository<ShoppingList> shoppingListRepository)
         {
-            _projectRepository = projectRepository;
+            _shoppingListRepository = shoppingListRepository;
         }
 
         // GET shoppingList/{projectId?}
@@ -25,7 +24,7 @@ namespace AwesomeApp.Web.Controllers
         public async Task<IActionResult> Index(int projectId = 1)
         {
             var spec = new ShoppingListByIdWithItemsSpec(projectId);
-            var shoppingList = await _projectRepository.GetBySpecAsync(spec);
+            var shoppingList = await _shoppingListRepository.GetBySpecAsync(spec);
 
             var dto = new ShoppingListViewModel
             {

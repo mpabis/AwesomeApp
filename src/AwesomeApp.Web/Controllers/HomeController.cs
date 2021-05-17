@@ -1,18 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using AwesomeApp.Core.ProjectAggregate;
+using AwesomeApp.SharedKernel.Interfaces;
+using AwesomeApp.Web.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AwesomeApp.Web.Controllers
 {
     /// <summary>
-    /// A sample MVC controller that uses views.
-    /// Razor Pages provides a better way to manage view-based content, since the behavior, viewmodel, and view are all in one place,
-    /// rather than spread between 3 different folders in your Web shoppingList. Look in /Pages to see examples.
-    /// See: https://ardalis.com/aspnet-core-razor-pages-%E2%80%93-worth-checking-out/
     /// </summary>
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IRepository<ShoppingList> _shoppingListRepository;
+
+        public HomeController(IRepository<ShoppingList> shoppingListRepository)
         {
-            return View();
+            _shoppingListRepository = shoppingListRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var shoppingList = await _shoppingListRepository.ListAsync();
+
+            var dto = ShoppingListsViewModel.FromShoppingLists(shoppingList);
+
+            return View(dto);
         }
 
         public IActionResult Error()
