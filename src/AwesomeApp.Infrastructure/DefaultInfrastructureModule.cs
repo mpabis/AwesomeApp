@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
-using AwesomeApp.Core.Interfaces;
 using AwesomeApp.Core.ProjectAggregate;
 using AwesomeApp.Infrastructure.Data;
 using AwesomeApp.SharedKernel.Interfaces;
@@ -75,9 +74,6 @@ namespace AwesomeApp.Infrastructure
                 .AsClosedTypesOf(mediatrOpenType)
                 .AsImplementedInterfaces();
             }
-
-            builder.RegisterType<EmailSender>().As<IEmailSender>()
-                .InstancePerLifetimeScope();
         }
 
         private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

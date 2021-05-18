@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AwesomeApp.Web.Api
 {
     /// <summary>
-    /// A sample API Controller. Consider using API Endpoints (see Endpoints folder) for a more SOLID approach to building APIs
-    /// https://github.com/ardalis/ApiEndpoints
+    /// A sample API Controller.
     /// </summary>
     public class ShoppingListsController : BaseApiController
     {

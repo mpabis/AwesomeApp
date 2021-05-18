@@ -46,7 +46,6 @@ namespace AwesomeApp.Web
 				c.EnableAnnotations();
 			});
 
-			// add list services for diagnostic purposes - see https://github.com/ardalis/AspNetCoreStartupServices
 			services.Configure<ServiceConfig>(config =>
 			{
 				config.Services = new List<ServiceDescriptor>(services);
