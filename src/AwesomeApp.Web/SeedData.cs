@@ -12,36 +12,61 @@ namespace AwesomeApp.Web
         public static readonly ShoppingList TestShoppingList = new ShoppingList("Test ShoppingList");
         public static readonly Item Item1 = new Item
         {
-            Title = "Get Sample Working",
-            Description = "Try to get the sample to build."
+            Title = "Bread",
+            Description = ""
         };
         public static readonly Item Item2 = new Item
         {
-            Title = "Review Solution",
-            Description = "Review the different projects in the solution and how they relate to one another."
+            Title = "Eggs",
+            Description = "Free range eggs"
         };
         public static readonly Item Item3 = new Item
         {
-            Title = "Run and Review Tests",
-            Description = "Make sure all the tests run and review what they are doing."
+            Title = "Milk",
+            Description = ""
         };
 
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var dbContext = new AppDbContext(
-                serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>(), null))
-            {
-                // Look for any TODO items.
-                if (dbContext.Items.Any())
-                {
-                    return;   // DB has been seeded
-                }
-
-                PopulateTestData(dbContext);
-
-
-            }
+            InitializeAppContext(serviceProvider);
+            InitializeAuditContext(serviceProvider);
         }
+
+        private static void InitializeAuditContext(IServiceProvider serviceProvider)
+        {
+            using var dbContext = new AuditDbContext(serviceProvider.GetRequiredService<DbContextOptions<AuditDbContext>>());
+            if (dbContext.AuditEntries.Any())
+            {
+                return;
+            }
+
+            PopulateAuditEntries(dbContext);
+        }
+
+        private static void PopulateAuditEntries(AuditDbContext dbContext)
+        {
+            foreach (var item in dbContext.AuditEntries)
+            {
+                dbContext.Remove(item);
+            }
+            dbContext.SaveChanges();
+            
+            dbContext.AuditEntries.Add(new AuditEntry { DateTime = DateTime.Now, Entry = "Initialization" });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void InitializeAppContext(IServiceProvider serviceProvider)
+        {
+            using var dbContext = new AppDbContext(serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>(), null);
+            // if (dbContext.Items.Any())
+            // {
+            //     return;
+            // }
+
+            PopulateTestData(dbContext);
+        }
+
         public static void PopulateTestData(AppDbContext dbContext)
         {
             foreach (var item in dbContext.Items)

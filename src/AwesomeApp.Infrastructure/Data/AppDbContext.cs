@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Ardalis.EFCore.Extensions;
 using AwesomeApp.Core.ProjectAggregate;
+using AwesomeApp.Infrastructure.Data.Config;
 using AwesomeApp.SharedKernel;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +12,6 @@ namespace AwesomeApp.Infrastructure.Data
     public class AppDbContext : DbContext
     {
         private readonly IMediator _mediator;
-
-        //public AppDbContext(DbContextOptions options) : base(options)
-        //{
-        //}
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IMediator mediator)
             : base(options)
@@ -30,10 +26,8 @@ namespace AwesomeApp.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyAllConfigurationsFromCurrentAssembly();
-
-            // alternately this is built-in to EF Core 2.2
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new ShoppingListConfiguration());
+            modelBuilder.ApplyConfiguration(new ItemConfiguration());
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

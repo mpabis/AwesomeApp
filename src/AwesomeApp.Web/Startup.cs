@@ -34,9 +34,9 @@ namespace AwesomeApp.Web
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
-			string connectionString = Configuration.GetConnectionString("SqliteConnection");  //Configuration.GetConnectionString("DefaultConnection");
+			string sqlServerConnectionString = Configuration.GetConnectionString("SqlServerConnection");
 
-			services.AddDbContext(connectionString);
+			services.AddDbContext(sqlServerConnectionString);
 
 			services.AddControllersWithViews().AddNewtonsoftJson();
 			services.AddRazorPages();
