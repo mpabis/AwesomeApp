@@ -33,13 +33,17 @@ Pouziva sa ako oddeleny projekt s kodom zdielanym medzi roznymi bounded kontextm
 
 Implementuje API endpointy ako aj weboveho klienta pomocou ASP.NET Core.
 
+## Dektopovy klient
+
+Pre desktopoveho klienta je pouzity projekt [Electron.NET](https://github.com/ElectronNET/Electron.NET), ktory zaobali ASP.NET Core webstranku do Electron aplikacie. Vyhodou je multi-platformove riesenie beziace na Win/macOS/Linux systemoch. Nevyhodou a riskom je relativne mala rozsirenost kniznice Electron.NET aj ked parametre githubu nie su az take nepriaznive (5.7k stars, 543 forks, 82 issues).
+
 ## Tests
 
 Pouziva xunit, Moq a TestHost.
 
 ## Databaza
 
-Aplikacia pouziva lokalnu sqlite databazu. Bohuzial som nestihol podporu inych databaz. Implementacia by potrebovala tri oddelene DbContext triedy, pre kazdu databazu. EF Core podporuje MySQL, MS SQL aj Oracle data providerov.
+Aplikacia pouziva lokalnu sqlite databazu. Bohuzial som nestihol podporu inych databaz. Implementacia by potrebovala tri oddelene DbContext triedy, pre kazdu databazu. EF Core podporuje MySQL, MS SQL aj Oracle data providerov. Toto riesenie ma limitacie, napriklad nemoznost previazania databaz pomocou cudzich klucov ako aj absencia distribuovanych transakcii cez vsetky databazy.
 
 ## Spustenie
 
@@ -59,3 +63,12 @@ dotnet tool install ElectronNET.CLI -g
 cd src\AwesomeApp.Web
 electronize start
 ```
+
+## Alternativne riesenie
+
+Mozne zdokonalenie riesenia by bolo pouzit:
+- Backend a API: .NET Core s Clean architekturou
+- Front end webovy klient: Angular
+- Front end desktopovy klient: Electron
+
+Vyhodou by bolo robustnejsie riesenie, kedze ElectronNET pravdepodobne nebude riesenim do produkcneho prostredia.
