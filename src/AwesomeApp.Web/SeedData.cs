@@ -9,21 +9,21 @@ namespace AwesomeApp.Web
 {
     public static class SeedData
     {
-        public static readonly ShoppingList TestShoppingList = new ShoppingList("Test ShoppingList");
+        public static readonly ShoppingList TestShoppingList = new ShoppingList("Shopping List");
         public static readonly Item Item1 = new Item
         {
-            Title = "Get Sample Working",
-            Description = "Try to get the sample to build."
+            Title = "Break",
+            Description = ""
         };
         public static readonly Item Item2 = new Item
         {
-            Title = "Review Solution",
-            Description = "Review the different projects in the solution and how they relate to one another."
+            Title = "Eggs",
+            Description = "Freerange eggs"
         };
         public static readonly Item Item3 = new Item
         {
-            Title = "Run and Review Tests",
-            Description = "Make sure all the tests run and review what they are doing."
+            Title = "Milk",
+            Description = ""
         };
 
         public static void Initialize(IServiceProvider serviceProvider)

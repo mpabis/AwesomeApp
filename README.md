@@ -33,6 +33,29 @@ Pouziva sa ako oddeleny projekt s kodom zdielanym medzi roznymi bounded kontextm
 
 Implementuje API endpointy ako aj weboveho klienta pomocou ASP.NET Core.
 
-# Tests
+## Tests
 
 Pouziva xunit, Moq a TestHost.
+
+## Databaza
+
+Aplikacia pouziva lokalnu sqlite databazu. Bohuzial som nestihol podporu inych databaz. Implementacia by potrebovala tri oddelene DbContext triedy, pre kazdu databazu. EF Core podporuje MySQL, MS SQL aj Oracle data providerov.
+
+## Spustenie
+
+Webovy klient sa spusti:
+
+``` cmd
+cd src\AwesomeApp.Web
+dotnet run
+```
+
+a otvorenim weboveho prehliadaca s adresou http://localhost:57679. Na adrese  http://localhost:57679/swagger je swagger dokumentacia k API.
+
+Desktopovy klient sa spusti:
+
+``` cmd
+dotnet tool install ElectronNET.CLI -g
+cd src\AwesomeApp.Web
+electronize start
+```
